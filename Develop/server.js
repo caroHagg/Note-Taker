@@ -23,8 +23,8 @@ router.get("/api/notes", (req,res) =>{
             return console.log(err);
             
         }else{
-            const response = JSON.parse(data);
-            return res.json(response)
+            const noteList = JSON.parse(data);
+            return res.json(noteList)
 
         }
     })
@@ -38,14 +38,14 @@ router.post("/api/notes", (req,res) => {
             return console.log(err);
             
         }else{
-            const response = JSON.parse(data);
+            const noteList = JSON.parse(data);
             const newNote = {
                 id:uuid.v4(),
                 title: req.body.title,
                 text:req.body.text,
             }
-            response.push(newNote);
-            fs.writeFile("./db/db.json",JSON.stringify(response,null,4),(err)=>{
+            noteList.push(newNote);
+            fs.writeFile("./db/db.json",JSON.stringify(noteList,null,4),(err)=>{
                 if(err){
                     return console.log(err);
                 }else{
@@ -56,6 +56,30 @@ router.post("/api/notes", (req,res) => {
     })
 
 });
+
+router.delete("/api/notes/:id", (req,res) => {
+    fs.readFile("./db/db.json","utf-8",(err,data)=>{
+        if (err) {
+
+            return console.log(err);
+            
+        }else{
+            const noteList = JSON.parse(data);
+            //create a new list without the note by id to be deleted
+            const newNoteList = noteList.filter(note => note.id !== req.params.id);
+
+            fs.writeFile("./db/db.json",JSON.stringify(newNoteList,null,4),(err)=>{
+                if(err){
+                    return console.log(err);
+                }else{
+                    return res.json({msg:"Note has been deleted"});
+                }
+            })
+        }
+    })
+
+});
+
 
 
 router.listen(PORT,()=>{
