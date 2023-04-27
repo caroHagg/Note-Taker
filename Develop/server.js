@@ -80,12 +80,12 @@ router.delete("/api/notes/:id", (req,res) => {
 
 });
 
+router.get("/*", (req,res) =>
+res.sendFile(path.join(__dirname, "/public/index.html"))
+);
 
 
 router.listen(PORT,()=>{
     console.log("listening on port " + PORT)
 });
 
-router.get("/*", (req,res) =>
-res.sendFile(path.join(__dirname, "/public/index.html"))
-);
