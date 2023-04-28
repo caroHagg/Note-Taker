@@ -34,7 +34,8 @@ The starter code was provided by the instructor and I got more information about
 ## Links
 
 GitHub:https://github.com/caroHagg/Note-Taker
-Heroku deployed:  
+
+Heroku deployed:  https://pure-peak-10662.herokuapp.com/
 
 
 
